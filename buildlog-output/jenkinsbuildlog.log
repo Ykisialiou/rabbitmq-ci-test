@@ -1,0 +1,177 @@
+Started by user Jenkins Admin
+ > git rev-parse --is-inside-work-tree # timeout=10
+Setting origin to https://github.com/Ykisialiou/rabbitmq-ci-test.git
+ > git config remote.origin.url https://github.com/Ykisialiou/rabbitmq-ci-test.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git --version # 'git version 2.20.1'
+ > git config --get remote.origin.url # timeout=10
+ > git fetch --tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/main
+Seen 1 remote branch
+Obtained Jenkinsfile from cc907ca9b19e900a5d0117867dde53427d349971
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] echo
+[WARNING] label option is deprecated. To use a static pod template, use the 'inheritFrom' option.
+[Pipeline] podTemplate
+[Pipeline] {
+[Pipeline] node
+Created Pod: kubernetes default/builder-0cjdl-lwz82
+[Normal][default/builder-0cjdl-lwz82][Scheduled] Successfully assigned default/builder-0cjdl-lwz82 to aks-exnodepool-27870808-vmss000000
+[Normal][default/builder-0cjdl-lwz82][Pulling] Pulling image "gcr.io/kaniko-project/executor:debug"
+[Normal][default/builder-0cjdl-lwz82][Pulled] Successfully pulled image "gcr.io/kaniko-project/executor:debug" in 246.129567ms
+[Normal][default/builder-0cjdl-lwz82][Created] Created container builder
+[Normal][default/builder-0cjdl-lwz82][Started] Started container builder
+[Normal][default/builder-0cjdl-lwz82][Pulled] Container image "jenkins/inbound-agent:4.3-4" already present on machine
+[Normal][default/builder-0cjdl-lwz82][Created] Created container jnlp
+[Normal][default/builder-0cjdl-lwz82][Started] Started container jnlp
+Agent builder-0cjdl-lwz82 is provisioned from template builder-0cjdl
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    buildUrl: "http://jenkins-1615290407:8080/job/123/job/main/6/"
+    runUrl: "job/123/job/main/6/"
+  labels:
+    jenkins/jenkins-1615290407-jenkins-agent: "true"
+    jenkins/label-digest: "3274da16c9ecbc2c163f56693a2aeee654a7780f"
+    jenkins/label: "builder"
+  name: "builder-0cjdl-lwz82"
+spec:
+  containers:
+  - command:
+    - "/busybox/cat"
+    image: "gcr.io/kaniko-project/executor:debug"
+    imagePullPolicy: "Always"
+    name: "builder"
+    tty: true
+    volumeMounts:
+    - mountPath: "/kaniko/.docker/"
+      name: "docker-config"
+    - mountPath: "/kaniko/.docker/acr/"
+      name: "docker-acr-config"
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_TUNNEL"
+      value: "jenkins-1615290407-agent:50000"
+    - name: "JENKINS_AGENT_NAME"
+      value: "builder-0cjdl-lwz82"
+    - name: "JENKINS_NAME"
+      value: "builder-0cjdl-lwz82"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    - name: "JENKINS_URL"
+      value: "http://jenkins-1615290407:8080/"
+    image: "jenkins/inbound-agent:4.3-4"
+    name: "jnlp"
+    resources:
+      limits: {}
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  volumes:
+  - name: "docker-config"
+    secret:
+      secretName: "kaniko-secret"
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+  - name: "docker-acr-config"
+    secret:
+      secretName: "kaniko-secret"
+
+Running on builder-0cjdl-lwz82 in /home/jenkins/agent/workspace/123_main
+[Pipeline] {
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning with configured refspecs honoured and without tags
+Cloning repository https://github.com/Ykisialiou/rabbitmq-ci-test.git
+ > git init /home/jenkins/agent/workspace/123_main # timeout=10
+Fetching upstream changes from https://github.com/Ykisialiou/rabbitmq-ci-test.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.20.1'
+ > git fetch --no-tags --force --progress -- https://github.com/Ykisialiou/rabbitmq-ci-test.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision cc907ca9b19e900a5d0117867dde53427d349971 (main)
+ > git config remote.origin.url https://github.com/Ykisialiou/rabbitmq-ci-test.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f cc907ca9b19e900a5d0117867dde53427d349971 # timeout=10
+Commit message: "jenkinsfile"
+ > git rev-list --no-walk cc907ca9b19e900a5d0117867dde53427d349971 # timeout=10
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] container
+[Pipeline] {
+[Pipeline] container
+[Pipeline] {
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ pwd
++ /kaniko/executor --dockerfile /home/jenkins/agent/workspace/123_main/Dockerfile '--destination=rabbitmqaldevopstest.azurecr.io/app:6'
+E0309 12:58:40.592577      17 aws_credentials.go:77] while getting AWS credentials NoCredentialProviders: no valid providers in chain. Deprecated.
+	For verbose messaging see aws.Config.CredentialsChainVerboseErrors
+[36mINFO[0m[0000] Retrieving image manifest rabbitmq:3.8.14    
+[36mINFO[0m[0000] Retrieving image rabbitmq:3.8.14 from registry index.docker.io 
+[36mINFO[0m[0001] Built cross stage deps: map[]                
+[36mINFO[0m[0001] Retrieving image manifest rabbitmq:3.8.14    
+[36mINFO[0m[0001] Returning cached image manifest              
+[36mINFO[0m[0001] Executing 0 build triggers                   
+[36mINFO[0m[0001] Unpacking rootfs as cmd RUN rabbitmq-plugins enable rabbitmq_management requires it. 
+[36mINFO[0m[0005] RUN rabbitmq-plugins enable rabbitmq_management 
+[36mINFO[0m[0005] Taking snapshot of full filesystem...        
+[36mINFO[0m[0009] cmd: /bin/sh                                 
+[36mINFO[0m[0009] args: [-c rabbitmq-plugins enable rabbitmq_management] 
+[36mINFO[0m[0009] Running: [/bin/sh -c rabbitmq-plugins enable rabbitmq_management] 
+Enabling plugins on node rabbit@builder-0cjdl-lwz82:
+rabbitmq_management
+The following plugins have been configured:
+  rabbitmq_management
+  rabbitmq_management_agent
+  rabbitmq_prometheus
+  rabbitmq_web_dispatch
+Applying plugin configuration to rabbit@builder-0cjdl-lwz82...
+The following plugins have been enabled:
+  rabbitmq_management
+
+set 4 plugins.
+Offline change; changes will take effect at broker restart.
+[36mINFO[0m[0013] Taking snapshot of full filesystem...        
+[36mINFO[0m[0013] Pushing image to rabbitmqaldevopstest.azurecr.io/app:6 
+[36mINFO[0m[0017] Pushed image to 1 destinations               
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // podTemplate
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] End of Pipeline
+Finished: SUCCESS
