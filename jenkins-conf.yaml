@@ -1,0 +1,19 @@
+controller:
+   ingress:
+       enabled: true
+       paths: []
+       apiVersion: "networking.k8s.io/v1"
+       hostName: jenkins.yakisialiou.xyz
+agent:
+   affinity:
+       podAntiAffinity:
+           requiredDuringSchedulingIgnoredDuringExecution:
+               - labelSelector:
+                   matchExpressions:
+                       - key: app.kubernetes.io/component
+                         operator: In
+                         values:
+                         - jenkins-controller 
+                 topologyKey:  agentpool
+
+
